@@ -1,0 +1,36 @@
+services:
+  nocodb:
+    image: nocodb/nocodb:latest
+    container_name: benchlet_noco
+    volumes:
+      - ./:/usr/app/data
+
+  filebrowser:
+    image: gtstef/filebrowser:beta
+    container_name: benchlet_filebrowser
+    volumes:
+      - ./files:/srv
+      - ./filebrowser/config.yaml:/home/filebrowser/config.yaml:ro
+
+  marimo:
+    build:
+      context: .
+      dockerfile: Dockerfile.marimo
+    container_name: benchlet_marimo
+    volumes:
+      - ./notebooks:/app/notebooks
+      - ./noco.db:/app/noco.db:ro
+    command: ["marimo", "edit", "--host", "0.0.0.0", "--port", "2718", "--base-url", "/marimo", "--no-token"]
+
+  nginx:
+    image: nginx:1.27-alpine
+    container_name: benchlet_web
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./nginx/html:/usr/share/nginx/html:ro
+    depends_on:
+      - nocodb
+      - filebrowser
+      - marimo

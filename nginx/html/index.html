@@ -1,0 +1,233 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Benchlet</title>
+    <style>
+      :root {
+        --bg: #f6f4fb;
+        --bg-soft: #ffffff;
+        --fg: #1f1b2d;
+        --muted: #6b6680;
+        --card: #ffffff;
+        --line: #d9d4e6;
+        --accent: #8b5cf6;
+        --accent-2: #ec4899;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        font-family: "Space Grotesk", "IBM Plex Sans", "BIZ UDPGothic", "Hiragino Sans", sans-serif;
+        background:
+          radial-gradient(circle at 10% 10%, rgba(139, 92, 246, 0.18), transparent 45%),
+          radial-gradient(circle at 90% 20%, rgba(236, 72, 153, 0.16), transparent 42%),
+          linear-gradient(160deg, #f8f6fc 0%, #f4f1fb 45%, #eef1fb 100%);
+        color: var(--fg);
+        min-height: 100vh;
+      }
+      body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        background-image: linear-gradient(rgba(130, 120, 160, 0.14) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(130, 120, 160, 0.14) 1px, transparent 1px);
+        background-size: 32px 32px;
+        opacity: 0.2;
+      }
+      main {
+        max-width: 1040px;
+        margin: 0 auto;
+        padding: 72px 20px 96px;
+        position: relative;
+      }
+      header {
+        display: grid;
+        gap: 18px;
+        margin-bottom: 36px;
+      }
+      h1 {
+        margin: 0;
+        font-size: clamp(34px, 5vw, 56px);
+        letter-spacing: 0.5px;
+      }
+      .lede {
+        margin: 0;
+        color: var(--muted);
+        font-size: 16px;
+        max-width: 720px;
+      }
+      .pill-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+      .pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 6px 12px;
+        font-size: 12px;
+        border-radius: 999px;
+        border: 1px solid var(--line);
+        background: rgba(255, 255, 255, 0.72);
+        color: var(--muted);
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+      }
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        gap: 18px;
+        margin-bottom: 32px;
+      }
+      .card {
+        display: grid;
+        gap: 12px;
+        padding: 22px;
+        border-radius: 16px;
+        background: linear-gradient(160deg, rgba(255, 255, 255, 0.92), rgba(244, 241, 251, 0.92));
+        text-decoration: none;
+        color: var(--fg);
+        border: 1px solid var(--line);
+        transition: transform 140ms ease, border-color 140ms ease, box-shadow 140ms ease;
+        position: relative;
+        overflow: hidden;
+      }
+      .card::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(circle at 20% 20%, rgba(139, 92, 246, 0.2), transparent 55%);
+        opacity: 0;
+        transition: opacity 200ms ease;
+      }
+      .card:hover {
+        transform: translateY(-3px);
+        border-color: rgba(139, 92, 246, 0.6);
+        box-shadow: 0 16px 36px rgba(86, 60, 140, 0.18);
+      }
+      .card:hover::after {
+        opacity: 1;
+      }
+      .card-title {
+        font-size: 20px;
+      }
+      .card-desc {
+        font-size: 14px;
+        color: var(--muted);
+      }
+      .card-link {
+        font-size: 12px;
+        color: var(--accent);
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+      .panel {
+        display: grid;
+        gap: 12px;
+        padding: 20px;
+        border-radius: 16px;
+        background: var(--bg-soft);
+        border: 1px solid var(--line);
+      }
+      .panel-title {
+        font-size: 16px;
+        color: var(--accent-2);
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+      }
+      .panel ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: grid;
+        gap: 10px;
+        color: var(--muted);
+        font-size: 14px;
+      }
+      .panel li {
+        display: flex;
+        gap: 10px;
+      }
+      .panel li::before {
+        content: "•";
+        color: var(--accent);
+      }
+      .footer {
+        margin-top: 36px;
+        color: var(--muted);
+        font-size: 12px;
+      }
+      .fade-in {
+        animation: fadeIn 450ms ease forwards;
+        opacity: 0;
+      }
+      .delay-1 {
+        animation-delay: 120ms;
+      }
+      .delay-2 {
+        animation-delay: 220ms;
+      }
+      .delay-3 {
+        animation-delay: 320ms;
+      }
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(6px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      @media (max-width: 640px) {
+        main {
+          padding: 56px 18px 72px;
+        }
+        .pill {
+          font-size: 11px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <header class="fade-in">
+        <h1>Benchlet</h1>
+        <p class="lede">
+          作業に必要な実行・記録・共有を一つの入口にまとめるローカル運用ポータル。
+        </p>
+        <div class="pill-row">
+          <span class="pill">Carry-in</span>
+          <span class="pill">Repeatable</span>
+          <span class="pill">Offline-first</span>
+        </div>
+      </header>
+
+      <div class="grid fade-in delay-1">
+        <a class="card" href="/nocodb/" target="_blank" rel="noopener noreferrer">
+          <div class="card-title">NocoDB</div>
+          <div class="card-desc">手順・成果物・メタ情報の管理をUIとAPIで統合。</div>
+          <div class="card-link">/nocodb</div>
+        </a>
+        <a class="card" href="/filebrowser/" target="_blank" rel="noopener noreferrer">
+          <div class="card-title">Filebrowser</div>
+          <div class="card-desc">成果物の持ち帰りと共有を最短導線で。</div>
+          <div class="card-link">/filebrowser</div>
+        </a>
+        <a class="card" href="/marimo/" target="_blank" rel="noopener noreferrer">
+          <div class="card-title">marimo</div>
+          <div class="card-desc">作業手順の実行と記録をノートブック化。</div>
+          <div class="card-link">/marimo</div>
+        </a>
+      </div>
+
+      <div class="footer fade-in delay-2">Benchlet / Local-only operations hub</div>
+    </main>
+  </body>
+</html>

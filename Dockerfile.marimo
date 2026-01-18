@@ -1,0 +1,15 @@
+FROM python:3.11-slim
+
+WORKDIR /app
+
+ENV PYTHONDONTWRITEBYTECODE=1
+ENV PYTHONUNBUFFERED=1
+
+RUN pip install --no-cache-dir --upgrade pip \
+  && pip install --no-cache-dir \
+    ansible-core>=2.15.13 \
+    marimo>=0.17.6 \
+    requests>=2.32.5 \
+    sqlalchemy>=2.0.45
+
+EXPOSE 2718

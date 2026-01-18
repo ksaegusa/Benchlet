@@ -1,0 +1,11 @@
+server:
+  port: 80
+  baseURL: "/filebrowser/"
+  logging:
+    - levels: "info|warning|error"
+  sources:
+    - path: "/srv"
+
+frontend:
+  name: "BenchletFileBrowser"
+  # favicon: "/path/to/favicon.png"

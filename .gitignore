@@ -1,0 +1,6 @@
+# marimo / NocoDB / Filebrowser data
+noco.db
+backups/
+.env
+*.env
+__marimo__/
